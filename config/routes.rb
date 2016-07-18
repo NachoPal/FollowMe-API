@@ -3,9 +3,6 @@ Rails.application.routes.draw do
   #root to: "home#index"
 
   constraints subdomain: 'api' do
-
-    devise_for :users, controllers: {sessions: 'sessions', registrations: 'registrations'}
-
     namespace :v1 do
       post '/sign-up', to: 'user#sign_up', as: :sign_up
     end

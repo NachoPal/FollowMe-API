@@ -1,3 +1,3 @@
-class SessionsController < Devise::SessionsController
+class SessionsController < ApplicationController
   respond_to :json
 end

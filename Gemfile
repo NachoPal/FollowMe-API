@@ -23,7 +23,6 @@ gem 'activerecord-postgis-adapter', '~> 4.0.0.beta'
 gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'rgeo-activerecord'
-gem 'devise'
 gem 'jwt'
 
 group :development, :test do
