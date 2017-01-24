@@ -19,3 +19,11 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+
+.rvmrc
+.bundle
+.DS_STORE
+*.log
+.project
+.idea/*

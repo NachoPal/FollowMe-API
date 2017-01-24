@@ -12,7 +12,7 @@ gem 'rails', '5.0.0.rc1'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
@@ -24,6 +24,7 @@ gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'rgeo-activerecord'
 gem 'jwt'
+gem 'capistrano', '~> 3.7'
 
 group :development, :test do
   gem 'pry-rails'
