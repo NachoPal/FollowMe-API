@@ -85,9 +85,10 @@ GEM
     jsonapi-parser (0.1.1.beta3)
     jsonapi-renderer (0.1.1.beta1)
     jwt (1.5.6)
-    listen (3.0.8)
+    listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+      ruby_dep (~> 1.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -167,6 +168,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby_dep (1.5.0)
     slop (3.6.0)
     spring (2.0.1)
       activesupport (>= 4.2)
@@ -205,7 +207,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   jwt
-  listen (~> 3.0.5)
+  listen (~> 3.1.5)
   pg
   pry-rails
   rack-attack
