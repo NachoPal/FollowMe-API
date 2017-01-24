@@ -26,12 +26,13 @@ test:
   database: followme_test
 
 staging:
-  <<: *development
-  database: followme
+  adapter: postgis
+  pool: 5
+  timeout: 5000
+  database: followme_staging
   host: 54.186.214.132
-  #port: 3306
-  username: nacho
-  password: nacho
+  username: deploy
+  password: deploy
 
 production:
   <<: *default
