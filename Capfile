@@ -8,4 +8,4 @@ install_plugin Capistrano::SCM::Git
 
 require 'capistrano/rvm'
 set :rvm_type, :user
-set :rvm_ruby_version, '2.4.0'
+set :rvm_ruby_version, '2.3.1'

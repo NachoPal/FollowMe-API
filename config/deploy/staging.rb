@@ -7,7 +7,7 @@ set :application, application
 set :branch, :staging
 set :deploy_to, "/home/deploy/#{application}"
 
-# # Capistrano rvm
+# # # Capistrano rvm
 rvm_mri = 'ruby-2.3.1@fm'
 set :rvm_ruby_version, rvm_mri
 set :rvm_type, :user
