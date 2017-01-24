@@ -1,5 +1,5 @@
 set :application, 'follow_me_api'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :repo_url, 'git@github.com:NachoPal/FollowMe-API.git'
 
 set :deploy_to, '/home/deploy/follow_me_api'
 
