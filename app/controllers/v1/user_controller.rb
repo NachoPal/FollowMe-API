@@ -1,8 +1,6 @@
 module V1
   class UserController < ApplicationController
     def sign_up
-      puts 'hola'
-
       User.create()
       render json: {hola: 'hola'}
     end
