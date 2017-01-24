@@ -10,14 +10,6 @@ set :bundle_binstubs, nil
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_flags, '--deployment --quiet'
 
-task :app_log_dir do
-  on roles(:all) do
-    # change the log directory symlink
-    execute  "cd #{release_path} && rm -rf log && ln -s /var/log/follow_me/application log"
-    execute  "cd #{shared_path} && rm -rf log && ln -s /var/log/follow_me/application log"
-  end
-end
-
 namespace :deploy do
   desc 'Restart application'
   task :restart do
@@ -28,7 +20,6 @@ namespace :deploy do
     end
   end
 
-  after 'deploy:updating', 'app_log_dir'
   after 'deploy:publishing', 'deploy:restart'
 end
 
