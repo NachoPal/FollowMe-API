@@ -30,7 +30,7 @@ staging:
   pool: 5
   timeout: 5000
   database: followme_staging
-  host: 54.186.214.132
+  host: 127.0.0.1
   username: deploy
   password: deploy
 
