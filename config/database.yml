@@ -25,6 +25,14 @@ test:
   <<: *development
   database: followme_test
 
+staging:
+  <<: *development
+  database: followme
+  host: 54.186.214.132
+  #port: 3306
+  username: nacho
+  password: nacho
+
 production:
   <<: *default
   database: db/production.sqlite3

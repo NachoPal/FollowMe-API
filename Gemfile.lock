@@ -60,9 +60,14 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-harrow (0.5.3)
+    capistrano-passenger (0.2.0)
+      capistrano (~> 3.0)
     capistrano-rails (1.2.2)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
@@ -197,8 +202,10 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
   activerecord-postgis-adapter (~> 4.0.0.beta)
-  capistrano (~> 3.7)
-  capistrano-rails
+  capistrano (~> 3.7, >= 3.7.1)
+  capistrano-passenger (~> 0.2.0)
+  capistrano-rails (~> 1.2)
+  capistrano-rvm
   database_cleaner
   factory_girl_rails
   jwt
