@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   constraints subdomain: 'api' do
    namespace :v1 do
-      get '/sign-up', to: 'user#sign_up', as: :sign_up
+      post '/sign-up', to: 'user#sign_up', as: :sign_up
     end
   end
 end

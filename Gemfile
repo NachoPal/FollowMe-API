@@ -9,7 +9,8 @@ gem 'rails', '5.0.1'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+
+gem 'bcrypt-ruby', require: 'bcrypt'
 
 # Use Capistrano for deployment
 gem 'capistrano', '3.4.0', require: false
