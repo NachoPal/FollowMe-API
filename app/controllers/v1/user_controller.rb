@@ -3,16 +3,16 @@ module V1
 
     def sign_up
       begin
-        user = User.new(user_params)
+        @user = User.new(user_params)
       rescue Exception
         render json: {status: 'error', reason: 'Invalid params'}
       end
 
-      if user.valid? && valid_passwords?(user)
-          user.save_and_update_password(params[:password])
+      if @user.valid? && valid_passwords?
+          @user.save_and_update_password(params[:password])
           render json: {status: 'success'}
       else
-        render json: {status: 'fail', reason: user.errors}
+        render json: {status: 'fail', reason: @user.errors}
       end
     end
 
@@ -53,19 +53,17 @@ module V1
       params.permit(:email, :name)
     end
 
-    def valid_passwords?(user)
+    def valid_passwords?
       password = params[:password]
       password_confirmation = params[:password_confirmation]
 
-      user.errors.add_on_blank :password unless password.present?
-      user.errors.add_on_blank :password_confirmation unless password_confirmation.present?
-      user.errors[:password] = 'is too short' unless password.size >= 6
-      user.errors[:password] = 'is too long' unless password.size <= 20
-      user.errors[:password_confirmation] = 'does not match' unless password == password_confirmation
+      @user.errors.add_on_blank :password unless password.present?
+      @user.errors.add_on_blank :password_confirmation unless password_confirmation.present?
+      @user.errors[:password] = 'is too short' unless password.size >= 6
+      @user.errors[:password] = 'is too long' unless password.size <= 20
+      @user.errors[:password_confirmation] = 'does not match' unless password == password_confirmation
 
-      !user.errors.keys.include?(:password) && !user.errors.keys.include?(:password_confirmation)
+      !@user.errors.keys.include?(:password) && !@user.errors.keys.include?(:password_confirmation)
     end
-
-
   end
 end
