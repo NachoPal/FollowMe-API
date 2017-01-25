@@ -8,7 +8,7 @@ module V1
         render json: {status: 'error', reason: 'Invalid params'}
       end
 
-      if @user.valid? && valid_passwords?
+      if @user.valid?
           @user.save_and_update_password(params[:password])
           render json: {status: 'success'}
       else
@@ -50,20 +50,7 @@ module V1
     private
 
     def user_params
-      params.permit(:email, :name)
-    end
-
-    def valid_passwords?
-      password = params[:password]
-      password_confirmation = params[:password_confirmation]
-
-      @user.errors.add_on_blank :password unless password.present?
-      @user.errors.add_on_blank :password_confirmation unless password_confirmation.present?
-      @user.errors[:password] = 'is too short' unless password.size >= 6
-      @user.errors[:password] = 'is too long' unless password.size <= 20
-      @user.errors[:password_confirmation] = 'does not match' unless password == password_confirmation
-
-      !@user.errors.keys.include?(:password) && !@user.errors.keys.include?(:password_confirmation)
+      params.permit(:email, :name, :password, :password_confirmation)
     end
   end
 end
