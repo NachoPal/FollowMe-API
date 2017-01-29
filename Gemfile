@@ -31,7 +31,8 @@ gem 'rgeo-geojson'
 gem 'rgeo-activerecord'
 gem 'jwt'
 
-group :development, :test do
+
+group :development, :test, :staging do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
