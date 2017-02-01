@@ -17,7 +17,7 @@ class User < ApplicationRecord
     if valid_password?(password, self.encrypted_password)
       payload(self)
     else
-      {status: 'fail', reason: {password: 'is incorrect'}}
+      {json: {reason: {password: 'is incorrect'}}, status: 401}
     end
   end
 
@@ -32,8 +32,11 @@ class User < ApplicationRecord
   end
 
   def payload(user)
-    {status: 'success',
-     auth_token: JsonWebToken.encode({user_id: user.id}),
-     user: {id: user.id, email: user.email}}
+    {
+    json:
+      {auth_token: JsonWebToken.encode({user_id: user.id}),
+       user: {id: user.id, email: user.email}},
+     status: 200
+    }
   end
 end

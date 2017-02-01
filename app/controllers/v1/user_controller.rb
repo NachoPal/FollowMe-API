@@ -5,12 +5,12 @@ module V1
       begin
         @user = User.new(user_params)
       rescue Exception
-        render json: {status: 'error', reason: 'Invalid params'}
+        render json: {}, status: 500
       end
 
       if @user.valid?
           @user.save_and_update_password(params[:password])
-          render json: {status: 'success'}
+          render json: {}, status: 201
       else
         render json: {status: 'fail', reason: @user.errors}
       end
@@ -23,15 +23,15 @@ module V1
         if user.present?
           if params[:password].present?
             response = user.authenticate(params[:password])
-            render json: response
+            render json: response[:json], status: response[:status]
           else
-            render json: {status: 'fail', reason: {password: 'can not be blank'}}
+            render json: {reason: {password: 'can not be blank'}}, status: 401
           end
         else
-          render json: {status: 'fail', reason: {email: 'not registered'}}
+          render json: {reason: {email: 'not registered'}}, status: 401
         end
       else
-        render json: {status: 'fail', reason: {email: 'can not be blank'}}
+        render json: {reason: {email: 'can not be blank'}}, status: 401
       end
     end
 
