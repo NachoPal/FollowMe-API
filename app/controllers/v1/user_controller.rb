@@ -25,13 +25,13 @@ module V1
             response = user.authenticate(params[:password])
             render json: response[:json], status: response[:status]
           else
-            render json: {reason: {password: 'can not be blank'}}, status: 401
+            render json: {reason: {password: 'can not be blank'}}
           end
         else
-          render json: {reason: {email: 'not registered'}}, status: 401
+          render json: {reason: {email: 'not registered'}}
         end
       else
-        render json: {reason: {email: 'can not be blank'}}, status: 401
+        render json: {reason: {email: 'can not be blank'}}
       end
     end
 

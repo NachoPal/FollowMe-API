@@ -17,7 +17,7 @@ class User < ApplicationRecord
     if valid_password?(password, self.encrypted_password)
       payload(self)
     else
-      {json: {reason: {password: 'is incorrect'}}, status: 401}
+      {json: {reason: {password: 'is incorrect'}}, status: 200}
     end
   end
 
