@@ -12,7 +12,7 @@ module V1
           @user.save_and_update_password(params[:password])
           render json: {}, status: 201
       else
-        render json: {status: 'fail', reason: @user.errors}
+        render json: {status: 'error', reason: @user.errors}
       end
     end
 
@@ -25,13 +25,13 @@ module V1
             response = user.authenticate(params[:password])
             render json: response[:json], status: response[:status]
           else
-            render json: {reason: {password: 'can not be blank'}}
+            render json: {status: 'error', reason: {password: 'can not be blank'}}
           end
         else
-          render json: {reason: {email: 'not registered'}}
+          render json: {status: 'error', reason: {email: 'not registered'}}
         end
       else
-        render json: {reason: {email: 'can not be blank'}}
+        render json: {status: 'error', reason: {email: 'can not be blank'}}
       end
     end
 
