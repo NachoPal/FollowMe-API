@@ -1,6 +1,7 @@
 module V1
   class TripController < ApplicationController
-    before_action :authenticate_request!, only: [:update, :create, :destroy]
+    before_action :strict_authenticate_request!, only: [:update, :create, :destroy]
+    before_action :soft_authenticate_request!, only: [:index, :show, :destroy]
 
     def index
       user = User.find(params[:user_id])
@@ -25,7 +26,7 @@ module V1
       trip = trip.where(public: true) unless is_a_owner_request?
 
       if trip.present?
-        render json: {status: 'success', payload: trip}
+        render json: {status: 'success', payload: trip.first}
       else
         render json: {status: 'error', reason: {trip: 'does not exist'}}
       end
@@ -45,22 +46,27 @@ module V1
     end
 
     def update
-      trip = current_user.trips.where(id: params[:id])
+      trips = current_user.trips.where(id: params[:ids].map{ |id| id.to_i})
 
-      if trip.present?
-        trip.update_all(trip_params)
-        render json: {status: 'success', payload: trip}
+      if trips.present?
+        trips.update_all(trip_params.to_h)
+
+        if trips.count == 1
+          redirect_to v1_user_trip_show_url(user_id: current_user.id, trip_id: trips.first.id)
+        else
+          redirect_to v1_user_trip_index_url(user_id: current_user.id)
+        end
       else
         render json: {status: 'error', reason: {trip: 'does not exist'}}
       end
     end
 
     def destroy
-      trip = current_user.trips.where(id: params[:id])
+      trips = current_user.trips.where(id: params[:ids].map{ |id| id.to_i})
 
-      if trip.present?
-        trip.destroy!
-        render json: {status: 'success'}
+      if trips.present?
+        trips.destroy_all
+        redirect_to v1_user_trip_index_url(user_id: current_user.id)
       else
         render json: {status: 'error', reason: {trip: 'does not exist'}}
       end
@@ -69,7 +75,7 @@ module V1
     private
 
     def trip_params
-      params.permit(:name, :description, :id => [])
+      params.permit(:name, :description, :public)
     end
   end
 end

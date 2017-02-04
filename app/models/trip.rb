@@ -5,5 +5,5 @@ class Trip < ApplicationRecord
 
   validates :name, presence: true, length: { in: 3..20 }
   validates :description, length: { in: 0..100 }
-
+  validates :public, inclusion: { in: [true, false] }
 end

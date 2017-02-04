@@ -2,7 +2,8 @@ class ApplicationController < ActionController::API
   attr_reader :current_user
 
   protected
-  def authenticate_request!
+
+  def strict_authenticate_request!
     if user_id_in_token?
       @current_user = User.find(@auth_token['user_id'])
     else
@@ -13,8 +14,18 @@ class ApplicationController < ActionController::API
     render json: {status: :unauthorized}
   end
 
+  def soft_authenticate_request!
+    if user_id_in_token?
+      @current_user = User.find(@auth_token['user_id'])
+    else
+      @current_user = nil
+    end
+  rescue JWT::VerificationError, JWT::DecodeError
+    render json: {status: :unauthorized}
+  end
+
   def is_a_owner_request?
-    @current_user.id == params[:user_id].to_i
+    @current_user.present? ? @current_user.id == params[:user_id].to_i : false
   end
 
   private
