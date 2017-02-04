@@ -13,6 +13,10 @@ class ApplicationController < ActionController::API
     render json: {status: :unauthorized}
   end
 
+  def is_a_owner_request?
+    @current_user.id == params[:user_id].to_i
+  end
+
   private
   def http_token
     @http_token ||= if request.headers['Authorization'].present?
@@ -26,5 +30,9 @@ class ApplicationController < ActionController::API
 
   def user_id_in_token?
     http_token && auth_token && @auth_token['user_id']
+  end
+
+  def is_current_user?
+    @current_user
   end
 end

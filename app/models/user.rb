@@ -1,11 +1,15 @@
 class User < ApplicationRecord
 
+  has_many :trip_users
+  has_many :trips, :through => :trip_users
+
   attr_accessor :password
 
-  validates :name, :presence => true, :uniqueness => true, :length => { :in => 3..20 }
-  validates :email, :presence => true, :uniqueness => true, :format => { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
-  validates :password, :confirmation => true #password_confirmation attr
-  validates_length_of :password, :in => 6..20, :on => :create
+  validates :name, presence: true, uniqueness: true, length: { in: 3..20 }
+  validates :email, presence: true, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :password, confirmation: true #password_confirmation attr
+  validates_length_of :password, in: 6..20, :on => :create
+
 
 
   def save_and_update_password(password)
