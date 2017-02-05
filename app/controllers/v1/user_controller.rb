@@ -3,16 +3,16 @@ module V1
 
     def sign_up
       begin
-        @user = User.new(user_params)
+        user = User.new(user_params)
       rescue Exception
         render json: {}, status: 500
       end
 
-      if @user.valid?
-          @user.save_and_update_password(params[:password])
+      if user.valid?
+          user.save_and_update_password(params[:password])
           render json: {}, status: 201
       else
-        render json: {status: 'error', reason: @user.errors}
+        render json: {status: 'error', reason: user.errors}
       end
     end
 

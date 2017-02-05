@@ -24,8 +24,15 @@ class ApplicationController < ActionController::API
     render json: {status: :unauthorized}
   end
 
-  def is_a_owner_request?
-    @current_user.present? ? @current_user.id == params[:user_id].to_i : false
+  def is_a_owner_request?(controller)
+    case controller.class.name.demodulize
+      when 'TripController'
+        @current_user.present? ? @current_user.id == params[:user_id].to_i : false
+      when 'DayController'
+        @current_user.present? ? @current_user.trips.where(id: params[:trip_id]).present? : false
+      else
+        false
+    end
   end
 
   private
