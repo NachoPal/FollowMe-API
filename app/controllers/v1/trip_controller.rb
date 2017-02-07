@@ -13,7 +13,8 @@ module V1
         if is_a_owner_request?(self)
           #render json: {status: 'success',
           #              payload: {public: public_trips + private_trips}}
-          render json: public_trips + private_trips, include: 'days.accommodations'
+          render json: public_trips + private_trips,
+                 include: ['days.accommodations', 'days.entertainments']
         else
           #render json: {status: 'success',
           #              payload: {public: public_trips, private: private_trips}}
