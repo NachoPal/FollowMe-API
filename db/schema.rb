@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204191936) do
+ActiveRecord::Schema.define(version: 20170207145608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accommodations", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "day_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["day_id"], name: "index_accommodations_on_day_id", using: :btree
+  end
 
   create_table "days", force: :cascade do |t|
     t.integer  "index"
@@ -21,6 +31,55 @@ ActiveRecord::Schema.define(version: 20170204191936) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trip_id"], name: "index_days_on_trip_id", using: :btree
+  end
+
+  create_table "entertainments", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "day_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["day_id"], name: "index_entertainments_on_day_id", using: :btree
+  end
+
+  create_table "food_and_beverages", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "day_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["day_id"], name: "index_food_and_beverages_on_day_id", using: :btree
+  end
+
+  create_table "natures", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "day_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["day_id"], name: "index_natures_on_day_id", using: :btree
+  end
+
+  create_table "point_of_interests", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "day_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["day_id"], name: "index_point_of_interests_on_day_id", using: :btree
+  end
+
+  create_table "transportations", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "day_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["day_id"], name: "index_transportations_on_day_id", using: :btree
   end
 
   create_table "trip_users", force: :cascade do |t|
