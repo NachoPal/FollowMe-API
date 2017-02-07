@@ -1,0 +1,3 @@
+class Port < Transportation
+
+end

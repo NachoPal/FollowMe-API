@@ -1,0 +1,3 @@
+class Museum < Entertainment
+
+end

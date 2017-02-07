@@ -1,0 +1,3 @@
+class ArtGallery < Entertainment
+
+end

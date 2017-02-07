@@ -1,0 +1,3 @@
+class BusStation < Transportation
+
+end

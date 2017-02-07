@@ -1,0 +1,3 @@
+class NightClub < FoodAndBeverage
+
+end

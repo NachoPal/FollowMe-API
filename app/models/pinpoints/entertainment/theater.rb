@@ -1,0 +1,3 @@
+class Theater < Entertainment
+
+end

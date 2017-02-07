@@ -1,0 +1,3 @@
+class Airport < Transportation
+
+end

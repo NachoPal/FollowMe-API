@@ -1,0 +1,3 @@
+class TrainStation < Transportation
+
+end
