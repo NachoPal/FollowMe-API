@@ -11,11 +11,13 @@ module V1
         private_trips = user.trips.where(public: false)
 
         if is_a_owner_request?(self)
-          render json: {status: 'success',
-                        payload: {public: public_trips + private_trips}}
+          #render json: {status: 'success',
+          #              payload: {public: public_trips + private_trips}}
+          render json: public_trips + private_trips, include: 'days.accommodations'
         else
-          render json: {status: 'success',
-                        payload: {public: public_trips, private: private_trips}}
+          #render json: {status: 'success',
+          #              payload: {public: public_trips, private: private_trips}}
+          render json: public_trips, include: ['days']
         end
       else
         render json: {status: 'error', reason: {user: 'does not exist'}}

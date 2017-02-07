@@ -8,5 +8,4 @@ class Day < ApplicationRecord
   has_many :point_of_interests
   has_many :transportations
 
-  #scope :hotels, -> { joins(:accommodations).where(accommodations: {type: 'Hotel'}) }
 end
