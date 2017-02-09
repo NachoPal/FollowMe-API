@@ -7,15 +7,25 @@ module V1
       user = User.find(params[:user_id])
 
       if user.present?
-        public_trips = user.trips.where(public: true)
-        private_trips = user.trips.where(public: false)
+        # public_trips = user.trips.where(public: true)
+        # private_trips = user.trips.where(public: false)
 
         if is_a_owner_request?(self)
+          trips = user.trips
+          #binding.pry
           #render json: {status: 'success',
           #              payload: {public: public_trips + private_trips}}
-          render json: public_trips + private_trips,
-                 include: ['days.accommodations', 'days.entertainments']
+          days = Day.joins(trip: [:users]).where(users: {id: current_user.id})
+          accommodation = Accommodation.joins(:day).where(days: {id: days.group(:id).count.keys})
+          entertainments = Entertainment.joins(:day).where(days: {id: days.group(:id).count.keys})
+
+          render json: [trips, days, [accommodation, entertainments]]
+
+
+          # render json: public_trips + private_trips,
+          #        include: ['days.accommodations', 'days.entertainments']
         else
+          trips = user.trips.where(public: true)
           #render json: {status: 'success',
           #              payload: {public: public_trips, private: private_trips}}
           render json: public_trips, include: ['days']
