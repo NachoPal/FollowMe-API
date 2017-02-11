@@ -11,7 +11,6 @@ module V1
           trips = user.trips
 
           render json: trips, include: TRIP_ASSOCIATIONS
-
         else
           trips = user.trips.where(public: true)
 
