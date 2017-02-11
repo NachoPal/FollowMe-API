@@ -34,6 +34,9 @@ gem 'jwt'
 
 group :development, :test, :staging do
   gem 'pry-rails'
+#  gem 'pry-remote'
+#  gem 'pry-stack_explorer'
+#  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
