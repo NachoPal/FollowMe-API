@@ -1,20 +1,6 @@
-# module JsonRedux
-#   class Adapter < ActiveModelSerializers::Adapter::Base
-#     attr_accessor :options
-
 module ActiveModelSerializers
   module Adapter
     class JsonRedux < Base
-      extend ActiveSupport::Autoload
-      autoload :Jsonapi
-      autoload :ResourceIdentifier
-      autoload :Relationship
-      autoload :Link
-      autoload :PaginationLinks
-      autoload :Meta
-      autoload :Error
-      autoload :Deserialization
-
 
       def initialize(serializer, options = {})
         super
@@ -22,46 +8,33 @@ module ActiveModelSerializers
       end
 
       def serializable_hash(*)
-        key = serializer.first.object.class.name.downcase.pluralize
-        path = []
-        #binding.pry
-        response = laostiaputa(serializer, response = {}, key)
+        model_name = serializer.first.object.class.name.downcase.pluralize
+        associations_json_tree(serializer, response = {}, model_name)
       end
-
 
       private
 
-      def laostiaputa(serializer, response, key)
+      def associations_json_tree(serializer, response, model_name)
 
-        #binding.pry
-        serializer.each_with_index do |record, j|
+        serializer.each_with_index do |record, i|
+          response[model_name] = [] if i == 0
+          response[model_name] << record.attributes
 
-          # path.reduce do |step|
-          #   response.dig(step).last.dig(:associated)
-          # end
-
-          #current = response.dig(path)
-          response[key] = [] if j == 0
-          response[key] << record.attributes
-
-          if record.associations.present? &&
-            response[key].last.merge(associated: {})
-
+          if record.associations.present?
             record.associations.each do |association|
               associated_key = association.key
+
               if @include.include?(associated_key)
-                response[key].last[:associated] = laostiaputa(association.serializer, {}, associated_key)
+                unless response[model_name].last.key?(:associated)
+                  response[model_name].last.merge!(associated: {})
+                end
+                response[model_name].last[:associated].merge!((associations_json_tree(association.serializer, {}, associated_key)))
               end
             end
-
-
-            #binding.pry
-
           else
             break
           end
         end
-        #binding.pry
         response
       end
     end

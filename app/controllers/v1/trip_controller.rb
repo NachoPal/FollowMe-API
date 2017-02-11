@@ -15,12 +15,9 @@ module V1
           #binding.pry
           #render json: {status: 'success',
           #              payload: {public: public_trips + private_trips}}
-          days = Day.joins(trip: [:users]).where(users: {id: current_user.id})
-          accommodation = Accommodation.joins(:day).where(days: {id: days.group(:id).count.keys})
-          entertainments = Entertainment.joins(:day).where(days: {id: days.group(:id).count.keys})
 
           #render json: [trips, days, [accommodation, entertainments]], options: 'hola'
-          render json: trips, include: [:days, :accommodations]
+          render json: trips, include: [:days, :accommodations, :entertainments]
 
 
           #render json: trips,
