@@ -4,7 +4,7 @@ module ActiveModelSerializers
 
       def initialize(serializer, options = {})
         super
-        @include = options[:include]
+        @included = options[:include]
       end
 
       def serializable_hash(*)
@@ -24,7 +24,7 @@ module ActiveModelSerializers
             record.associations.each do |association|
               associated_key = association.key
 
-              if @include.include?(associated_key)
+              if @included.include?(associated_key) || @included.include?(:*)
                 unless response[model_name].last.key?(:associated)
                   response[model_name].last.merge!(associated: {})
                 end

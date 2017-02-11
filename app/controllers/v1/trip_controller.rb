@@ -7,26 +7,15 @@ module V1
       user = User.find(params[:user_id])
 
       if user.present?
-        # public_trips = user.trips.where(public: true)
-        # private_trips = user.trips.where(public: false)
-
         if is_a_owner_request?(self)
           trips = user.trips
-          #binding.pry
-          #render json: {status: 'success',
-          #              payload: {public: public_trips + private_trips}}
 
-          #render json: [trips, days, [accommodation, entertainments]], options: 'hola'
-          render json: trips, include: [:days, :accommodations, :entertainments]
+          render json: trips, include: TRIP_ASSOCIATIONS
 
-
-          #render json: trips,
-          #        include: ['days.accommodations', 'days.entertainments']
         else
           trips = user.trips.where(public: true)
-          #render json: {status: 'success',
-          #              payload: {public: public_trips, private: private_trips}}
-          render json: public_trips, include: ['days']
+
+          render json: trips, include: TRIP_ASSOCIATIONS
         end
       else
         render json: {status: 'error', reason: {user: 'does not exist'}}
@@ -41,7 +30,7 @@ module V1
 
         if trip.present?
           if is_a_owner_request?(self) || trip.first.public
-            render json: {status: 'success', payload: trip.first}
+            render json: trip, include: TRIP_ASSOCIATIONS
           else
             render json: {status: 'error', reason: {trip: 'is not public'}}
           end
@@ -59,7 +48,7 @@ module V1
       if trip.valid?
         trip.save!
         current_user.trips << trip
-        render json: {status: 'success', payload: trip}, status: 201
+        render json: trip, include: [], status: 201
       else
         render json: {status: 'error', reason: trip.errors}
       end

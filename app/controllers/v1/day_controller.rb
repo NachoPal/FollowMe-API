@@ -9,7 +9,7 @@ module V1
       if trip.present?
         if is_a_owner_request?(self) || trip.public
           days = trip.days
-          render json: {status: 'success', payload: days}
+          render json: days, include: DAYS_ASSOCIATIONS
         else
           render json: {status: 'error', reason: {trip: 'is not public'}}
         end
