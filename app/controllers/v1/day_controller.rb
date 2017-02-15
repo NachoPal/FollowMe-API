@@ -6,6 +6,7 @@ module V1
     def index
       trip = Trip.find(params[:trip_id])
 
+
       if trip.present?
         if is_a_owner_request?(self) || trip.public
           days = trip.days
