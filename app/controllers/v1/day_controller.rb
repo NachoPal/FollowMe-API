@@ -27,7 +27,7 @@ module V1
           day = trip.days.where(id: params[:day_id])
 
           if day.present?
-            render json: {status: 'success', payload: day}
+            render json: day, include: DAYS_ASSOCIATIONS
           else
             render json: {status: 'error', reason: {day: 'does not exist'}}
           end

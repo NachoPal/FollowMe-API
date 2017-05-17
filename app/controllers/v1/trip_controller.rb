@@ -44,10 +44,10 @@ module V1
     def create
       trip = Trip.new(trip_params)
 
-      if trip.valid?
-        trip.save!
+      if trip.save!
         current_user.trips << trip
-        render json: trip, include: [], status: 201
+        trip = Trip.where(id: trip.id)
+        render json: trip, status: 201
       else
         render json: {status: 'error', reason: trip.errors}
       end

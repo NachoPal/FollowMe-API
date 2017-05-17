@@ -5,6 +5,7 @@ module ActiveModelSerializers
       def initialize(serializer, options = {})
         super
         @included = options[:include]
+        @included ||= []
       end
 
       def serializable_hash(*)
